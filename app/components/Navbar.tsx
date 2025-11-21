@@ -7,7 +7,7 @@ export default function Navbar() {
   return (
     <div className="fixed top-0 w-[90%] rounded-2xl my-2 border-neutral-800/30 border  z-100 bg-neutral-800/60 backdrop-blur-3xl  h-fit px-6 py-4  flex justify-between items-center ">
       {/* <div className="bg-linear-90  from-green-600 to-green-800 "> */}
-      <Logo />
+      <Logo size={24} />
       {/* </div> */}
       <div className="flex gap-6 items-center">
         <div className="flex gap-5">
