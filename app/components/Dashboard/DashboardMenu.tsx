@@ -19,9 +19,10 @@ export default function DashboardMenu({
 }) {
   return (
     <div className="tracking-tight text-sm text-neutral-500 h-full w-[20%] flex flex-col gap-3 rounded-xl border border-neutral-800 bg-neutral-900 px-0 py-3">
-      {dashboardSections.map((section) => {
+      {dashboardSections.map((section, index) => {
         return (
           <div
+            key={index}
             onClick={() => setCurrentSection(section)}
             className={cn(
               "flex gap-2 items-center ",

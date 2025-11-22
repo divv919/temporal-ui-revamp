@@ -19,26 +19,13 @@ type SimpleIcon = {
 
 // Brand names to display
 const brandNames = [
-  "checkr",
-  "turo",
-  "mollie",
-  "kyte",
   "godaddy",
-  "lovable",
-  "hebbia",
   "snapchat",
   "kotak",
   "vodafone",
   "cloudflare",
   "gitlab",
   "bentley",
-  "deloitte",
-  "doordash",
-  "retool",
-];
-
-// Fallback brands if some are not available
-const fallbackBrands = [
   "github",
   "microsoft",
   "google",
@@ -48,6 +35,8 @@ const fallbackBrands = [
   "netflix",
   "spotify",
 ];
+
+// Fallback brands if some are not available
 
 // Helper function to get icon data
 function getIconData(brandName: string): SimpleIcon | null {
@@ -61,7 +50,6 @@ function getIconData(brandName: string): SimpleIcon | null {
   // Special cases for known brands
   const specialCases: Record<string, string> = {
     godaddy: "siGoDaddy",
-    deloitte: "siDeloitte",
   };
 
   if (specialCases[brandName.toLowerCase()]) {
@@ -82,21 +70,6 @@ function getIconData(brandName: string): SimpleIcon | null {
     }
   }
 
-  // Try fallback brands
-  for (const fallback of fallbackBrands) {
-    const fallbackKey = `si${
-      fallback.charAt(0).toUpperCase() + fallback.slice(1)
-    }` as keyof typeof simpleIcons;
-    const fallbackIcon = simpleIcons[fallbackKey] as SimpleIcon | undefined;
-    if (
-      fallbackIcon &&
-      typeof fallbackIcon === "object" &&
-      "hex" in fallbackIcon
-    ) {
-      return fallbackIcon;
-    }
-  }
-
   return null;
 }
 
@@ -110,33 +83,36 @@ const icons = brandNames
 
 export default function Marquee() {
   // Duplicate icons multiple times for seamless infinite loop
-  const duplicatedIcons = [...icons, ...icons, ...icons, ...icons];
+  const duplicatedIcons = [...icons, ...icons];
 
   return (
-    <div className="relative w-full overflow-hidden py-12 mt-20">
+    <div className="mask-x-from-0% mask-x-to-100% relative w-full overflow-hidden py-12 mt-30">
       {/* Mask effect - fade from left and right */}
       <div className="absolute inset-0 z-10 pointer-events-none mask-x-from-10% mask-x-to-90% bg-linear-to-r from-zinc-50 via-transparent to-zinc-50 dark:from-neutral-950 dark:via-transparent dark:to-neutral-950"></div>
 
       {/* Scrolling marquee */}
-      <div className="flex animate-marquee gap-16">
+      <div className="flex animate-marquee hover:animate-none gap-16">
         {duplicatedIcons.map((icon, index) => {
           if (!icon.data) return null;
 
           return (
             <div
               key={`${icon.name}-${index}`}
-              className="shrink-0 flex items-center justify-center"
+              className="shrink-0 flex gap-2 items-center group justify-center"
             >
               <svg
                 role="img"
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-12 h-12 opacity-60 hover:opacity-100 transition-opacity"
-                fill={`#${icon.data.hex}`}
+                className="w-12 h-12 opacity-100  "
+                fill={`#fff`}
               >
                 <title>{icon.data.title}</title>
                 <path d={icon.data.path} />
               </svg>
+              <div className="text-2xl text-white opacity-100  tracking-tight font-bold">
+                {icon.data.title}
+              </div>
             </div>
           );
         })}

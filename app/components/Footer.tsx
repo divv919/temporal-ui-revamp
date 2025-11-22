@@ -14,7 +14,7 @@ export const socialIcons: Record<string, any> = {
 };
 export default function Footer() {
   return (
-    <div className="relative mt-70 h-fit w-full px-4 ">
+    <div className="relative mt-60 h-fit w-full px-4 ">
       <div className="tracking-tight px-20 py-10 bg-green-950/60 relative w-full h-full rounded-t-2xl flex flex-col gap-4">
         <div className="absolute -bottom-1/4   pointer-events-none  right-1/2 translate-x-1/2 opacity-3">
           <Logo size={200} />

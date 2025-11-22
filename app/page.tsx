@@ -25,7 +25,7 @@ import Marquee from "./components/Marquee";
 
 export default function Home() {
   return (
-    <div className=" min-h-fit overflow-hidden items-center justify-center bg-zinc-50 font-sans dark:bg-neutral-950 relative ">
+    <div className="font-switzer min-h-fit overflow-hidden items-center justify-center bg-zinc-50  dark:bg-neutral-950 relative ">
       <div className="mask-t-from-0% mask-t-to-10% fixed pointer-events-none w-full h-full bg-black/70   z-10 "></div>
 
       <div className="h-17 w-full flex items-center justify-center ">

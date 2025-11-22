@@ -3,9 +3,9 @@ import { ButtonVariants } from "@/app/types/component";
 
 const buttonStyles = {
   primary:
-    "bg-linear-60 from-green-600 to-green-800 shadow-[inset_2px_3px_6px_rgba(255,255,255,0.5)] border border-green-700",
+    "bg-linear-60 from-green-600 to-green-800 shadow-[inset_2px_3px_6px_rgba(255,255,255,0.5)] ",
   secondary:
-    "bg-linear-0 from-neutral-950 to-neutral-800  border border-neutral-950 shadow-[inset_0px_2px_1px_rgba(255,255,255,0.1)]",
+    "bg-linear-0 from-neutral-950 to-neutral-800   shadow-[inset_0px_2px_1px_rgba(255,255,255,0.1)]",
 };
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {

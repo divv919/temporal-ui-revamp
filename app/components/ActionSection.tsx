@@ -4,17 +4,17 @@ import { Book, Brackets, Code } from "lucide-react";
 
 export default function ActionSection() {
   return (
-    <div className="w-full h-100 px-25  mt-60">
-      <div className="w-full h-full shadow-green-500/10 shadow-xl tracking-tight bg-green-700/30 flex flex-col gap-3 justify-center items-center relative rounded-2xl overflow-hidden">
+    <div className="w-full h-100 px-25  mt-40">
+      <div className="w-full h-full shadow-green-500/10 shadow-xl tracking-tight bg-green-700/30 flex flex-col gap-0 justify-center items-center relative rounded-2xl overflow-hidden">
         <div className="absolute rounded-full h-180 w-270  blur-3xl bg-radial from-green-300/40  to-green-300/10 bottom-0 translate-y-1/2 -translate-x-1/2 left-1/2"></div>
         <div className="absolute rounded-full h-140 w-240  blur-3xl bg-radial from-yellow-300/30  to-green-300/10 bottom-0 translate-y-1/2 -translate-x-1/2 left-1/2"></div>
         <div className="text-5xl text-green-50  relative">
           {preFooter.title}
         </div>
-        <div className="text-lg text-green-200/90 relative">
+        <div className="text-lg text-green-200/90 relative mt-1">
           {preFooter.subtitle}
         </div>
-        <div className="flex gap-4">
+        <div className="flex mt-4 gap-4">
           {preFooter.buttons.map((btn, index) => {
             return (
               <Link href={btn.href} key={btn.name + index}>

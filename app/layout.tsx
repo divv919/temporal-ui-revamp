@@ -1,7 +1,119 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Passion_One } from "next/font/google";
 import "./globals.css";
-import Navbar from "./components/Navbar";
+
+import localFont from "next/font/local";
+const passion_one = Passion_One({
+  subsets: ["latin"],
+  variable: "--font-passion-one",
+  weight: "400",
+});
+const switzer = localFont({
+  src: [
+    {
+      path: "../fonts/Switzer-Thin.woff2",
+      weight: "100",
+      style: "normal",
+    },
+    {
+      path: "../fonts/Switzer-ThinItalic.woff2",
+      weight: "100",
+      style: "italic",
+    },
+    {
+      path: "../fonts/Switzer-Extralight.woff2",
+      weight: "200",
+      style: "normal",
+    },
+    {
+      path: "../fonts/Switzer-ExtralightItalic.woff2",
+      weight: "200",
+      style: "italic",
+    },
+    {
+      path: "../fonts/Switzer-Light.woff2",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../fonts/Switzer-LightItalic.woff2",
+      weight: "300",
+      style: "italic",
+    },
+    {
+      path: "../fonts/Switzer-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../fonts/Switzer-Italic.woff2",
+      weight: "400",
+      style: "italic",
+    },
+    {
+      path: "../fonts/Switzer-Medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../fonts/Switzer-MediumItalic.woff2",
+      weight: "500",
+      style: "italic",
+    },
+    {
+      path: "../fonts/Switzer-Semibold.woff2",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../fonts/Switzer-SemiboldItalic.woff2",
+      weight: "600",
+      style: "italic",
+    },
+    {
+      path: "../fonts/Switzer-Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../fonts/Switzer-BoldItalic.woff2",
+      weight: "700",
+      style: "italic",
+    },
+    {
+      path: "../fonts/Switzer-Extrabold.woff2",
+      weight: "800",
+      style: "normal",
+    },
+    {
+      path: "../fonts/Switzer-ExtraboldItalic.woff2",
+      weight: "800",
+      style: "italic",
+    },
+    {
+      path: "../fonts/Switzer-Black.woff2",
+      weight: "900",
+      style: "normal",
+    },
+    {
+      path: "../fonts/Switzer-BlackItalic.woff2",
+      weight: "900",
+      style: "italic",
+    },
+    {
+      path: "../fonts/Switzer-Variable.woff2",
+      weight: "100 900",
+      style: "normal",
+    },
+    {
+      path: "../fonts/Switzer-VariableItalic.woff2",
+      weight: "100 900",
+      style: "italic",
+    },
+  ],
+  variable: "--font-switzer",
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,7 +138,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${passion_one.variable} ${geistMono.variable} ${switzer.variable} antialiased`}
       >
         {children}
       </body>

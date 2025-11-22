@@ -18,13 +18,13 @@ export default function Slider() {
   }, []);
   return (
     <div className="mt-90 w-full h-120  px-40  relative flex gap-16">
-      <div className="w-1/2 flex flex-col  gap-10">
+      <div className="w-1/2 flex flex-col   gap-10">
         {sliderData.map((slide, index) => {
           return (
             <div
               className={cn(
-                "flex flex-col  gap-2",
-                currentSlide === index ? "h-[50%]" : "h-[25%]"
+                " flex flex-col  gap-2 px-3 ",
+                currentSlide === index ? "border-l  h-fit" : "h-fit"
               )}
             >
               <div className="flex flex-col gap-0">

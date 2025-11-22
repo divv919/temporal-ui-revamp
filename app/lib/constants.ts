@@ -80,7 +80,7 @@ export const navbarConstants = {
     },
     {
       type: "primary",
-      name: "Get started",
+      name: "Get Started",
       href: "",
     },
   ],
