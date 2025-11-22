@@ -10,7 +10,7 @@ export default function Logo({ size = 60 }: { size: number }) {
       style={{ fontSize: size }}
     >
       <div>
-        <Layers size={20} />
+        <Layers size={size} />
       </div>
       FlowAI
       <div className="absolute bottom-1    blur-sm w-full h-2 bg-green-500/4  "></div>
