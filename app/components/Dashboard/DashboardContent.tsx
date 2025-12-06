@@ -1,4 +1,6 @@
-import { ChevronRight, Copy, GithubIcon } from "lucide-react";
+"use client";
+import { easeInOut, motion, useMotionValue } from "motion/react";
+import { Check, ChevronRight, Copy, GithubIcon } from "lucide-react";
 import CodeBlock from "../CodeBlock";
 import {
   enterprises,
@@ -23,7 +25,7 @@ import {
   UserPlus,
   Network,
 } from "lucide-react";
-import React from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Button from "../ui/button";
@@ -65,28 +67,66 @@ function StarterCode({
   currentCodeLanguage: CodeLanguages;
   setCurrentCodeLanguage: (language: CodeLanguages) => void;
 }) {
+  const [currentHover, setCurrentHover] = useState<CodeLanguages | null>(null);
+  const [isCopying, setIsCopying] = useState(false);
+  const handleCopy = async () => {
+    if (isCopying) {
+      return;
+    }
+    try {
+      const textToCopy = snippets.filter(
+        (snpt) => snpt.language === currentCodeLanguage
+      )[0].code;
+      setIsCopying(true);
+      await navigator.clipboard.writeText(textToCopy);
+      setTimeout(() => setIsCopying(false), 3000);
+    } catch (err) {
+      console.warn(err);
+    }
+  };
   return (
     <div className="flex flex-col px-3 ">
       <div className="border-b border-neutral-800 flex justify-between items-center">
-        <div className=" flex items-center gap-4 text-sm tracking-tight font-light text-neutral-500 py-2">
-          {languages.map((language) => {
+        <div
+          className="relative flex items-center gap-2 text-sm tracking-tight font-light text-neutral-500 py-2"
+          onMouseLeave={() => setCurrentHover(null)}
+        >
+          {languages.map((language, index) => {
+            const isActive =
+              currentHover === language ||
+              (currentHover === null && currentCodeLanguage === language);
             return (
               <div
-                onClick={() => {
-                  setCurrentCodeLanguage(language);
-                }}
+                onMouseEnter={() => setCurrentHover(language)}
+                key={index}
+                onClick={() => setCurrentCodeLanguage(language)}
                 className={cn(
-                  currentCodeLanguage === language &&
-                    "px-2 py-1 bg-neutral-800 rounded-md"
+                  "transition-colors duration-150",
+                  isActive && "text-neutral-50/70",
+                  "relative cursor-pointer px-2 py-1"
                 )}
               >
-                {language}
+                {isActive && (
+                  <motion.div
+                    layoutId="language-select-id"
+                    className="bg-neutral-800 absolute inset-0 rounded-md"
+                    transition={{
+                      type: "spring",
+                      stiffness: 500,
+                      damping: 30,
+                    }}
+                  />
+                )}
+                <span className="relative z-10">{language}</span>
               </div>
             );
           })}
         </div>
-        <div className="text-sm tracking-tight font-light text-neutral-500  px-2">
-          <Copy size={16} />
+        <div
+          onClick={handleCopy}
+          className=" cursor-pointer text-sm tracking-tight font-light text-neutral-500 px-2 hover:text-neutral-400 transition-all duration-200 ease-in-out"
+        >
+          {isCopying ? <Check size={16} /> : <Copy size={16} />}
         </div>
       </div>
       <div className="h-full w-full  my-2 rounded-xl">
@@ -225,8 +265,8 @@ function Enterprise() {
   return (
     <div className=" w-full h-full  p-3 flex  ">
       <div className="h-full  grid grid-rows-3 gap-2 ">
-        {enterprises.map((ep) => (
-          <div className="flex gap-4">
+        {enterprises.map((ep, index) => (
+          <div className="flex gap-4" key={index}>
             <div className="h-full aspect-video ">
               <Image
                 src={ep.thumb}
@@ -272,8 +312,11 @@ function UseCases() {
   };
   return (
     <div className=" grid grid-cols-3 grid-rows-3 h-full gap-2 p-3 ">
-      {useCases.map((use) => (
-        <div className="mask-b mask-b-from-10% mask-b-to-100% flex flex-col gap-1 bg-neutral-800  rounded-xl p-3 ">
+      {useCases.map((use, index) => (
+        <div
+          key={index}
+          className="mask-b mask-b-from-10% mask-b-to-100% flex flex-col gap-1 bg-neutral-800  rounded-xl p-3 "
+        >
           <div className="flex flex-col gap-1 items-start tracking-tight">
             <div className="text-neutral-300 tracking-tight text-md font-light text-center leading-5 ">
               {useCaseIcons[use.title]}

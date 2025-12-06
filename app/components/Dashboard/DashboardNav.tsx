@@ -24,10 +24,10 @@ export default function DashboardNav() {
             divyanshsoni919@gmail.com
           </div>
         </div>
-        <div className="rounded-full  h-fit bg-neutral-800 text-neutral-400 p-2">
+        <div className="rounded-full hover:rotate-90 transition-all duration-200 hover:text-neutral-300 cursor-pointer h-fit bg-neutral-800 text-neutral-400 p-2">
           <Settings size={18} />
         </div>
-        <div className="rounded-full h-fit  bg-neutral-800 text-neutral-400 p-2">
+        <div className="rounded-full h-fit  bg-neutral-800 text-neutral-400 p-2 cursor-pointer transition-all duration-200 hover:text-neutral-300">
           <User size={18} />
         </div>
       </div>

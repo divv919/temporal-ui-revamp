@@ -25,7 +25,7 @@ import Marquee from "./components/Marquee";
 
 export default function Home() {
   return (
-    <div className="font-switzer min-h-fit overflow-hidden items-center justify-center bg-zinc-50  dark:bg-neutral-950 relative ">
+    <div className="font-switzer min-h-fit overflow-hidden items-center justify-center bg-zinc-50  dark:bg-neutral-950 relative selection:bg-green-500 selection:text-neutral-50">
       <div className="mask-t-from-0% mask-t-to-10% fixed pointer-events-none w-full h-full bg-black/70   z-10 "></div>
 
       <div className="h-17 w-full flex items-center justify-center ">
@@ -43,7 +43,7 @@ export default function Home() {
             {headerSubtitle}
           </div>
           <div className="mx-auto shadow-[0px_10px_20px] rounded-md shadow-green-400/12 w-fit">
-            <Button className="w-fit mx-auto">
+            <Button className="w-fit mx-auto px-6 py-3 text-lg">
               <div className="flex gap-1 items-center ">
                 Join For Free{" "}
                 <div className="-mr-1">
