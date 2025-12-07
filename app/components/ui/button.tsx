@@ -12,7 +12,7 @@ import { ButtonVariants } from "@/app/types/component";
 const buttonStyles = {
   primary: " shadow-[inset_2px_3px_6px_rgba(255,255,255,0.5)] ",
   secondary:
-    "bg-linear-0 from-neutral-950 to-neutral-800   shadow-[inset_0px_2px_1px_rgba(255,255,255,0.1)]",
+    "bg-linear-0 from-neutral-950 to-neutral-800  px-[14px] shadow-[inset_0px_2px_1px_rgba(255,255,255,0.1)]",
 };
 
 interface ButtonProps extends HTMLMotionProps<"button"> {
@@ -37,12 +37,12 @@ const primaryVariant: Variants = {
 const secondaryVariant: Variants = {
   still: {
     backgroundImage:
-      "linear-gradient(var(--color-neutral-800), var(--color-neutral-950))",
+      "linear-gradient(var(--color-neutral-800), var(--color-neutral-900))",
     backgroundSize: "30px 100%",
   },
   hovered: {
     backgroundImage:
-      "linear-gradient(var(--color-neutral-800),var(--color-neutral-950))",
+      "linear-gradient(var(--color-neutral-800),var(--color-neutral-900))",
     backgroundSize: "30px 200%",
   },
 };
@@ -63,7 +63,7 @@ export default function Button({
       }}
       {...rest}
       className={cn(
-        "px-4 py-2 cursor-pointer rounded-md",
+        "px-4 py-2 cursor-pointer rounded-md flex items-center justify-center",
         buttonStyles[variant],
         className
       )}

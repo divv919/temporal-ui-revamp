@@ -27,7 +27,7 @@ export default function DashboardMenu({
             key={index}
             onClick={() => setCurrentSection(section)}
             className={cn(
-              "flex gap-2 items-center cursor-pointer relative px-4 w-fit bg-transparent   py-1 transition-all duration-300 ease-in-out",
+              "flex gap-2 items-center cursor-pointer relative px-4 w-fit bg-transparent hover:text-neutral-200   py-1 transition-all duration-200 ease-in-out",
               currentSection === section && "text-neutral-50"
               // ? "bg-linear-0 gap-1 from-green-500 mx-2 to-green-800 px-2 flex-nowrap py-1 rounded-md text-green-100"
             )}

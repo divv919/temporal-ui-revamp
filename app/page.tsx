@@ -1,22 +1,9 @@
-import Image from "next/image";
 import Navbar from "./components/Navbar";
 import Gradient from "./components/Gradient";
 import { headerSubtitle, headerTitle, snippets } from "./lib/constants";
 import Button from "./components/ui/button";
-import {
-  Bookmark,
-  ChartColumn,
-  ChartPie,
-  ChevronRight,
-  Copy,
-  House,
-  Search,
-  Settings,
-  User,
-} from "lucide-react";
-import Logo from "./components/Logo";
-import { cn } from "./lib/util";
-import CodeBlock from "./components/CodeBlock";
+import { ChevronRight } from "lucide-react";
+
 import Dashboard from "./components/Dashboard/Dashboard";
 import Slider from "./components/Slider/Slider";
 import ActionSection from "./components/ActionSection";
