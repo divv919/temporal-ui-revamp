@@ -570,7 +570,7 @@ function Enterprise() {
   }, []);
 
   return (
-    <div className=" w-full h-130 lg:h-full overflow-scroll lg:overflow-hidden mask-y mask-y-from-90% mask-y-to-110%  flex  ">
+    <div className=" w-full h-130 lg:h-full overflow-scroll lg:overflow-hidden mask-y mask-y-from-90% lg:mask-none mask-y-to-100%  flex  ">
       <div className="  grid grid-rows-[auto_auto_auto] lg:grid-rows-3   ">
         {enterprises.map((ep, index) => (
           <div className="flex flex-col lg:flex-row gap-4 p-3" key={index}>
@@ -661,7 +661,7 @@ function UseCases() {
     DAG: <Network size={!isDesktop ? 14 : 18} />,
   };
   return (
-    <div className=" grid grid-cols-2 h-full  mask-y mask-y-from-90% mask-y-to-110% overflow-scroll lg:overflow-hidden lg:grid-cols-3 lg:grid-rows-3  gap-2 p-3 select-none">
+    <div className=" grid grid-cols-2 h-full lg:mask-none  mask-y mask-y-from-90% mask-y-to-100% overflow-scroll lg:overflow-hidden lg:grid-cols-3 lg:grid-rows-3  gap-2 p-3 select-none">
       {useCases.map((use, index) => (
         <motion.div
           initial={{

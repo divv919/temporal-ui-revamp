@@ -17,17 +17,14 @@ export const socialIcons: Record<string, any> = {
   Slack: Slack,
 };
 export default function Footer() {
-  const [isDesktop, setIsDesktop] = useState(true);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  // Check for desktop screen size
   useEffect(() => {
-    const checkDesktop = () => {
-      if (typeof window !== undefined && window.innerWidth <= 768) {
-        setIsDesktop(false);
-      } else {
-        setIsDesktop(true);
-      }
-      window.addEventListener("resize", checkDesktop);
-      return window.removeEventListener("resize", checkDesktop);
-    };
+    const checkDesktop = () => setIsDesktop(window.innerWidth > 768);
+    checkDesktop();
+    window.addEventListener("resize", checkDesktop);
+    return () => window.removeEventListener("resize", checkDesktop);
   }, []);
   return (
     <div
@@ -40,12 +37,12 @@ export default function Footer() {
       // whileInView={{ y: 0 }}
       className="relative mt-30  lg:mt-60 h-fit w-full px-4 "
     >
-      <div className="tracking-tight px-4 lg:px-20 py-6 lg:py-10 bg-green-950/60 relative w-full h-full rounded-t-2xl flex flex-col gap-4">
-        <div className="absolute -bottom-1/10   pointer-events-none  right-1/2 translate-x-1/2 opacity-3">
-          <Logo size={200} />
+      <div className="tracking-tight px-7 lg:px-20 py-6 lg:py-10 bg-green-950/60 relative w-full h-full rounded-t-2xl flex flex-col gap-4">
+        <div className="absolute -bottom-0 lg:-bottom-1/10  pointer-events-none  right-1/2 translate-x-1/2 opacity-3">
+          <Logo size={isDesktop ? 200 : 60} />
         </div>
-        <div className="flex justify-between  ">
-          <div className="text-[12px] lg:text-lg font-mono border border-green-50/10 px-2 py-1">
+        <div className="flex justify-between gap-4 ">
+          <div className="text-[12px] lg:text-lg font-mono border  border-green-50/10 px-2 py-1">
             {footerData.status}
           </div>
           <div className="flex gap-4 ">

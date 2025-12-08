@@ -97,14 +97,14 @@ export default function Slider() {
             initial={{ filter: "blur(4px)", opacity: 0 }}
             exit={{ filter: "blur(2px)", opacity: 0 }}
             animate={{ filter: "blur(0px)", opacity: 1 }}
-            transition={{
-              duration: 0.1,
-            }}
+            transition={{ duration: 0.1 }}
             src={sliderData[currentSlide].image}
             alt="slider-image"
-            width={200}
-            height={200}
-            className="w-full h-full aspect-square p-3"
+            width={800}
+            height={800}
+            priority // ✅ FORCE eager loading
+            loading="eager" // ✅ disables viewport-based lazy loading
+            className="w-full h-full aspect-square p-3 object-contain"
           />
         </AnimatePresence>
       </motion.div>
