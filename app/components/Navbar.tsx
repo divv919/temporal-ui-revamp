@@ -27,7 +27,7 @@ export default function Navbar() {
   return (
     <motion.div
       animate={{
-        width: isNavbarShrinked ? "80%" : "100%",
+        width: isNavbarShrinked ? "80%" : "97%",
         boxShadow: isNavbarShrinked
           ? "inset 0px 0px 24px rgba(255,255,255,0.1)"
           : "none",
@@ -121,11 +121,11 @@ export default function Navbar() {
                 variant={button.type as unknown as ButtonVariants}
                 className={cn(
                   "flex gap-1 items-center ",
-                  button.name === "Get Started" && "pr-2"
+                  button.name === "Get Started" && "pr-[17px]"
                 )}
               >
                 {button.name}
-                {button.name === "Get Started" && <ChevronRight size={20} />}
+                {/* {button.name === "Get Started" && <ChevronRight size={20} />} */}
               </Button>
             );
           })}

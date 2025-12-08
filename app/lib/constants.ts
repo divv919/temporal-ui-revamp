@@ -286,13 +286,21 @@ export const sliderData = [
     image:
       "https://images.ctfassets.net/0uuz8ydxyd9p/5URCP7ImlCFTve3Y00zFxx/4cdcce402d6322e27b3f3c0b60161de6/Open_Source_Image.svg",
   },
+  // {
+  //   pretitle: "As Reliable as Gravity",
+  //   title: "Fully battle tested, 9 years in production",
+  //   description:
+  //     "Temporal was built with over 20 years of development from the minds behind AWS SQS, AWS SWF, Azure Durable functions, and the Cadence project that powers Uber.",
+  //   image:
+  //     "https://images.ctfassets.net/0uuz8ydxyd9p/1vkSkyOrLKPghmTI6oAWlf/7b140d3724c5a96251f2269762227e52/Frame_22.svg",
+  // },
   {
-    pretitle: "As Reliable as Gravity",
-    title: "Fully battle tested, 9 years in production",
+    pretitle: "Designed for resilience",
+    title: "Write Activities to handle and retry failure-prone logic",
     description:
-      "Temporal was built with over 20 years of development from the minds behind AWS SQS, AWS SWF, Azure Durable functions, and the Cadence project that powers Uber.",
+      " APIs fail, networks time out, and users abandon sessions. Temporal treats these interactions as Activities: functions that retry automatically and recover seamlessly.",
     image:
-      "https://images.ctfassets.net/0uuz8ydxyd9p/1vkSkyOrLKPghmTI6oAWlf/7b140d3724c5a96251f2269762227e52/Frame_22.svg",
+      "https://images.ctfassets.net/0uuz8ydxyd9p/1Kx9Mb2lNos2PEbvIjy7S1/2957716a519e5c8923385f09fce67eea/Group_1000001988.svg",
   },
   {
     pretitle: "Improvements",

@@ -23,6 +23,7 @@ export default function Slider() {
         {sliderData.map((slide, index) => {
           return (
             <motion.div
+              key={index}
               layout
               style={{
                 willChange: "transform",
@@ -80,7 +81,7 @@ export default function Slider() {
                     opacity: 0,
                   }}
                   animate={{ filter: "blur(0px)", opacity: 1 }}
-                  className="tracking-tight  text-neutral-400"
+                  className="text-[17px]  tracking-normal text-neutral-300/85 font-light"
                 >
                   {slide.description}
                 </motion.div>
@@ -103,7 +104,7 @@ export default function Slider() {
             alt="slider-image"
             width={200}
             height={200}
-            className="w-full h-full aspect-square pr-3"
+            className="w-full h-full aspect-square p-3"
           />
         </AnimatePresence>
       </motion.div>

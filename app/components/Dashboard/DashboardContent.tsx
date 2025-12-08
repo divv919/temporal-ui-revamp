@@ -233,7 +233,7 @@ function Discover() {
           />
         </div>
         <div className="flex flex-col gap-1 overflow-hidden">
-          <div className="text-neutral-300/80 tracking-tight text-md font-light text-center leading-5">
+          <div className="text-neutral-100/80 tracking-normal text-md font-light text-center leading-5">
             Create failproof apps using our SDKs
           </div>
         </div>
@@ -257,10 +257,10 @@ function Discover() {
           />
         </div>
         <div className="flex flex-col gap-2 overflow-hidden">
-          <div className="text-neutral-300/80 tracking-tight text-md font-light leading-5">
+          <div className="text-neutral-100/80 tracking-normal text-md font-light leading-5">
             One platform, two great hosting paths
           </div>
-          <div className="text-sm text-neutral-400/80 tracking-tight font-light flex flex-col gap-1">
+          <div className="text-[15px] text-neutral-300/65 tracking-normal leading-5 font-light flex flex-col gap-1">
             Temporal is an open-source project that you are free to use and host
             in your own environment. You can also let us host the Temporal
             Service for you with Temporal Cloud. Either way, we never see your
@@ -325,10 +325,10 @@ function Discover() {
           />
         </div>
         <div className="flex flex-col gap-4 overflow-hidden">
-          <div className="text-neutral-300/80 tracking-tight text-md font-light leading-5">
+          <div className="text-neutral-100/80 tracking-normal text-md font-light leading-5">
             Replace your brittle state machines
           </div>
-          <div className="text-sm text-neutral-400/80 tracking-tight font-light flex flex-col gap-1">
+          <div className="text-[15px] text-neutral-300/65 tracking-normal leading-5 font-light flex flex-col gap-1">
             The Temporal Service persists the state of your application and has
             built-in retries, task queues, signals, and timers, to make sure
             your code always picks up where it left off.
@@ -354,10 +354,10 @@ function Discover() {
           />
         </div>
         <div className="flex flex-col gap-2 overflow-hidden">
-          <div className="text-neutral-300/80 tracking-tight text-md font-light leading-5">
+          <div className="text-neutral-100/80 tracking-normal text-md font-light leading-5">
             You have to see it to believe it
           </div>
-          <div className="text-sm text-neutral-400/80 tracking-tight font-light flex flex-col gap-1">
+          <div className="text-[15px] text-neutral-300/65 tracking-normal leading-5 font-light flex flex-col gap-1">
             Temporal doesn't work like anything you've used before. Watch how we
             guarantee the Durable Execution of your code in the face of any
             failure.
@@ -411,7 +411,7 @@ function Discover() {
           />
         </div>
         <div className="flex flex-col gap-1 overflow-hidden">
-          <div className="text-neutral-300/80 tracking-tight text-md font-light text-center leading-5">
+          <div className="text-neutral-100/80 tracking-normal text-md font-light text-center leading-5">
             Write code as if failure doesn't exist
           </div>
         </div>
@@ -437,10 +437,10 @@ function Enterprise() {
             </div>
             <div className="flex flex-col gap-3">
               <div className="flex flex-col gap-1">
-                <div className="text-neutral-300 tracking-tight text-md font-light  leading-5 ">
+                <div className="text-neutral-100/80 tracking-tight text-md font-light leading-5">
                   {ep.title}
                 </div>
-                <div className="text-sm text-neutral-400 font-light">
+                <div className="text-[15px] text-neutral-300/65 tracking-normal leading-5 font-light flex flex-col gap-1">
                   {ep.description}
                 </div>
               </div>
@@ -502,21 +502,33 @@ function UseCases() {
     <div className=" grid grid-cols-3 grid-rows-3 h-full gap-2 p-3 select-none">
       {useCases.map((use, index) => (
         <motion.div
+          initial={{
+            scale: 1,
+            y: 0,
+            maskImage:
+              "linear-gradient(to bottom, black 0%, black 10%, transparent 100%)",
+          }}
           animate={{
             scale: 1,
             y: 0,
+            maskImage:
+              "linear-gradient(to bottom, black 0%, black 10%, transparent 100%)",
           }}
           whileHover={{
-            y: -10,
-
-            scale: 1.05,
+            y: -15,
+            scale: 1.04,
+            maskImage:
+              "linear-gradient(to bottom, black 0%, black 75%, transparent 105%)",
           }}
           transition={{
-            maskPosition: { type: "spring" },
+            type: "spring",
+            damping: 20,
+            stiffness: 350,
+            mass: 1,
           }}
-          style={{ willChange: "transform" }}
+          style={{ willChange: "transform, mask-image" }}
           key={index}
-          className="group mask-b mask-b-from-10% mask-b-to-100% flex flex-col gap-1 bg-neutral-800 rounded-xl p-3"
+          className="group flex flex-col gap-1 bg-neutral-800 rounded-xl p-3"
         >
           <div
             style={{ willChange: "transform" }}
@@ -526,11 +538,11 @@ function UseCases() {
               {useCaseIcons[use.title]}
             </div>
 
-            <div className="group-hover:text-neutral-50 text-neutral-300 transition-all duration-200 tracking-tight text-md font-light text-center leading-5 ">
+            <div className="text-neutral-100/80 tracking-tight text-md font-light text-center leading-5">
               {use.title}
             </div>
           </div>
-          <div className=" group-hover:text-neutral-100 text-neutral-400 transition-all duration-200 text-sm  ">
+          <div className="text-[15px] text-neutral-300/65 tracking-normal leading-5 font-light flex flex-col gap-1">
             {use.description}
           </div>
         </motion.div>
