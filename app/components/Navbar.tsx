@@ -18,6 +18,14 @@ export default function Navbar() {
   const { scrollYProgress } = useScroll();
   const [isNavbarShrinked, setIsNavbarShrinked] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(true);
+  useEffect(() => {
+    const checkDesktop = () => setIsDesktop(window.innerWidth > 768);
+    checkDesktop();
+    window.addEventListener("resize", checkDesktop);
+    return () => window.removeEventListener("resize", checkDesktop);
+  }, []);
+
   useMotionValueEvent(scrollYProgress, "change", (val) => {
     if (scrollYProgress.get() > 0) {
       setIsNavbarShrinked(true);
@@ -32,12 +40,7 @@ export default function Navbar() {
   return (
     <motion.div
       animate={{
-        width:
-          typeof window !== undefined && window.innerWidth < 768
-            ? "100%"
-            : isNavbarShrinked
-            ? "80%"
-            : "97%",
+        width: !isDesktop ? "100%" : isNavbarShrinked ? "80%" : "97%",
         boxShadow: isNavbarShrinked
           ? "inset 0px 0px 24px rgba(255,255,255,0.1)"
           : "none",
@@ -108,9 +111,7 @@ export default function Navbar() {
         )}
       </AnimatePresence>
 
-      <Logo
-        size={typeof window !== undefined && window.innerWidth > 768 ? 24 : 22}
-      />
+      <Logo size={isDesktop ? 24 : 22} />
       {/* </div> */}
       <motion.div
         animate={{ gap: isNavbarShrinked ? "200px" : "48px" }}

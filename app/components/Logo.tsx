@@ -1,5 +1,6 @@
 import { Layers, Layers2 } from "lucide-react";
 import { cn } from "../lib/util";
+import { useEffect, useState } from "react";
 
 export default function Logo({ size = 30 }: { size: number }) {
   return (
@@ -20,7 +21,14 @@ export default function Logo({ size = 30 }: { size: number }) {
 }
 
 function LogoSVG() {
-  const isDesktop = typeof window !== undefined && window.innerWidth > 768;
+  const [isDesktop, setIsDesktop] = useState(true);
+  useEffect(() => {
+    const checkDesktop = () => setIsDesktop(window.innerWidth > 768);
+    checkDesktop();
+    window.addEventListener("resize", checkDesktop);
+    return () => window.removeEventListener("resize", checkDesktop);
+  }, []);
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

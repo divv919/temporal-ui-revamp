@@ -65,7 +65,7 @@ export default function Slider() {
                 <div className="text-xs leading-3 lg:leading-7 lg:text-lg text-green-600 font-medium tracking-tight">
                   {slide.pretitle}
                 </div>
-                <div className="text-md leading-5 lg:leading-11 lg:text-4xl text-green-50 font-normal lg:font-light tracking-tight">
+                <div className="text-lg leading-5 lg:leading-11 lg:text-4xl text-green-50 font-normal lg:font-light tracking-tight">
                   {slide.title}
                 </div>
               </motion.div>
@@ -81,7 +81,7 @@ export default function Slider() {
                     opacity: 0,
                   }}
                   animate={{ filter: "blur(0px)", opacity: 1 }}
-                  className="text-xs leading-4 lg:leading-6 lg:text-[17px]  tracking-normal text-neutral-300/85 font-light"
+                  className="text-[13px] leading-4 lg:leading-6 lg:text-[17px]  tracking-normal text-neutral-300/85 font-light"
                 >
                   {slide.description}
                 </motion.div>

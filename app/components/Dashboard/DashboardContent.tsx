@@ -30,7 +30,7 @@ import {
   UserPlus,
   Network,
 } from "lucide-react";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Button from "../ui/button";
@@ -59,7 +59,7 @@ export default function DashboardContent({
   };
 
   return (
-    <div className="h-full  w-full rounded-xl bg-neutral-900  border border-neutral-800 ">
+    <div className="h-131  lg:h-full  w-full rounded-xl bg-neutral-900  border border-neutral-800 ">
       {sectionToComponent[currentSection]}
     </div>
   );
@@ -74,6 +74,15 @@ function StarterCode({
 }) {
   const [currentHover, setCurrentHover] = useState<CodeLanguages | null>(null);
   const [isCopying, setIsCopying] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  // Check for desktop screen size
+  useEffect(() => {
+    const checkDesktop = () => setIsDesktop(window.innerWidth > 768);
+    checkDesktop();
+    window.addEventListener("resize", checkDesktop);
+    return () => window.removeEventListener("resize", checkDesktop);
+  }, []);
   const handleCopy = async () => {
     if (isCopying) {
       return;
@@ -84,9 +93,10 @@ function StarterCode({
       )[0].code;
       setIsCopying(true);
       await navigator.clipboard.writeText(textToCopy);
-      setTimeout(() => setIsCopying(false), 3000);
     } catch (err) {
       console.warn(err);
+    } finally {
+      setTimeout(() => setIsCopying(false), 3000);
     }
   };
   return (
@@ -106,7 +116,7 @@ function StarterCode({
                 key={index}
                 onClick={() => setCurrentCodeLanguage(language)}
                 className={cn(
-                  "transition-colors duration-150 text-xs lg:text-md",
+                  "transition-colors duration-150 text-xs lg:text-sm",
                   isActive && "text-neutral-50/70",
                   "relative cursor-pointer px-2 py-1"
                 )}
@@ -151,13 +161,7 @@ function StarterCode({
                   ease: "easeInOut",
                 }}
               >
-                <Check
-                  size={
-                    typeof window !== undefined && window.innerWidth > 768
-                      ? 16
-                      : 14
-                  }
-                />
+                <Check size={isDesktop ? 16 : 14} />
               </motion.div>
             ) : (
               <motion.div
@@ -178,13 +182,7 @@ function StarterCode({
                   ease: "easeInOut",
                 }}
               >
-                <Copy
-                  size={
-                    typeof window !== undefined && window.innerWidth > 768
-                      ? 16
-                      : 14
-                  }
-                />
+                <Copy size={isDesktop ? 16 : 14} />
               </motion.div>
             )}
           </AnimatePresence>
@@ -209,11 +207,25 @@ function StarterCode({
 function Discover() {
   const [hoveredChild, setHoveredChild] = useState<number | null>(null);
   const [isParentHovered, setIsParentHovered] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
 
-  // Blur and opacity logic: blur all children except the hovered one when parent is hovered
+  // Check for desktop screen size
+  useEffect(() => {
+    const checkDesktop = () => setIsDesktop(window.innerWidth > 768);
+    checkDesktop();
+    window.addEventListener("resize", checkDesktop);
+    return () => window.removeEventListener("resize", checkDesktop);
+  }, []);
+
+  // Blur and opacity logic: different behavior for mobile vs desktop
   const getBlurStyle = (index: number) => {
+    if (!isDesktop) {
+      // Mobile: only blur the hovered element itself
+      if (hoveredChild === index) return { filter: "blur(2px)", opacity: 0.8 };
+      return { filter: "blur(0px)", opacity: 1 };
+    }
+    // Desktop: blur all except the hovered one when parent is hovered
     if (!isParentHovered) return { filter: "blur(0px)", opacity: 1 };
-    // When parent is hovered: blur all except the one being hovered
     if (hoveredChild === index) return { filter: "blur(0px)", opacity: 1 };
     return { filter: "blur(2px)", opacity: 0.8 };
   };
@@ -225,50 +237,95 @@ function Discover() {
         setIsParentHovered(false);
         setHoveredChild(null);
       }}
-      className="gap-2 h-full p-3 grid grid-cols-10 lg:grid-rows-3 lg:grid-cols-3"
+      className="gap-2 h-full p-2 lg:p-3 grid grid-cols-2 lg:grid-rows-3 lg:grid-cols-3 overflow-hidden"
     >
-      {/* Child 0 - Mobile: Row 1 (70% width), Desktop: Top-left */}
+      {/* Child 0 - Mobile: Row 1, Desktop: Top-left */}
       <motion.div
-        animate={getBlurStyle(0)}
+        animate={!isDesktop ? {} : getBlurStyle(0)}
         transition={{ duration: 0.2 }}
         onMouseEnter={() => setHoveredChild(0)}
         onMouseLeave={() => setHoveredChild(null)}
-        className="col-span-3 order-1 lg:col-span-1 lg:row-span-1 lg:order-none h-full select-none w-full rounded-xl bg-neutral-800 flex flex-col items-center justify-center gap-3 p-3"
+        className="relative col-span-1 order-1 lg:col-span-1 lg:row-span-1 lg:order-0 h-full select-none w-full rounded-xl bg-neutral-800 flex flex-col items-center justify-center gap-3 p-2 lg:p-3 overflow-hidden min-h-0"
       >
-        <div>
+        <motion.div
+          animate={!isDesktop ? getBlurStyle(0) : {}}
+          transition={{ duration: 0.2 }}
+          className="w-full h-full lg:h-fit flex items-center justify-center min-h-0"
+        >
           <Image
             alt="laptop"
             width={300}
             height={100}
-            className="w-full aspect-3/1 object-contain"
+            className="w-full h-full object-contain"
             src="https://images.ctfassets.net/0uuz8ydxyd9p/1lQl33YaXWjGZHGCft4Ofs/189f974e93fdbd87e1a32d2a364289c1/Group_1000002002.svg"
           />
-        </div>
-        <div className="flex flex-col gap-1 overflow-hidden">
+        </motion.div>
+        {/* Mobile hover overlay */}
+        <AnimatePresence>
+          {hoveredChild === 0 && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="lg:hidden absolute inset-0 bg-neutral-900/80 rounded-xl flex flex-col items-center justify-center p-2"
+            >
+              <div className="text-neutral-100/90 tracking-normal text-sm font-light text-center leading-5">
+                Create failproof apps using our SDKs
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        {/* Desktop content */}
+        <div className="hidden lg:flex flex-col gap-1 overflow-hidden">
           <div className="text-neutral-100/80 tracking-normal text-md font-light text-center leading-5">
             Create failproof apps using our SDKs
           </div>
         </div>
       </motion.div>
 
-      {/* Child 1 - Mobile: Row 2 (full width), Desktop: Center column (tall) */}
+      {/* Child 1 - Mobile: Row 2, Desktop: Center column (tall) */}
       <motion.div
-        animate={getBlurStyle(1)}
+        animate={!isDesktop ? {} : getBlurStyle(1)}
         transition={{ duration: 0.2 }}
         onMouseEnter={() => setHoveredChild(1)}
         onMouseLeave={() => setHoveredChild(null)}
-        className="col-span-10 order-3 lg:col-span-1 lg:row-span-3 lg:order-none h-full select-none w-full rounded-xl bg-neutral-800 flex flex-col items-center justify-start gap-3 py-5 p-3"
+        className="relative col-span-1 order-3 lg:col-span-1 lg:row-span-3 lg:order-0 h-full select-none w-full rounded-xl bg-neutral-800 flex flex-col items-center justify-start gap-3 py-2 lg:py-5 p-2 lg:p-3 overflow-hidden min-h-0"
       >
-        <div>
+        <motion.div
+          animate={!isDesktop ? getBlurStyle(1) : {}}
+          transition={{ duration: 0.2 }}
+          className="w-full h-full lg:h-fit flex items-center justify-center min-h-0"
+        >
           <Image
             alt="laptop"
             width={300}
             height={100}
-            className="w-full aspect-2/1 object-contain"
+            className="w-full h-full object-contain"
             src="https://images.ctfassets.net/0uuz8ydxyd9p/7895g0MQaAct8ptqNaQUr7/84435f682e26b6085aa4d09e74537c16/Group_1000002050.svg"
           />
-        </div>
-        <div className="flex flex-col gap-2 overflow-hidden">
+        </motion.div>
+        {/* Mobile hover overlay */}
+        <AnimatePresence>
+          {hoveredChild === 1 && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="lg:hidden absolute inset-0 bg-neutral-900/80 rounded-xl flex flex-col items-center justify-center p-2 gap-1"
+            >
+              <div className="text-neutral-100/90 tracking-normal text-sm font-light text-center leading-5">
+                One platform, two great hosting paths
+              </div>
+              <div className="text-[13px] text-neutral-300/70 tracking-normal leading-4 font-light text-center">
+                Open-source or Temporal Cloud hosting
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        {/* Desktop content */}
+        <div className="hidden lg:flex flex-col gap-2 overflow-hidden">
           <div className="text-neutral-100/80 tracking-normal text-md font-light leading-5">
             One platform, two great hosting paths
           </div>
@@ -319,28 +376,52 @@ function Discover() {
         </div>
       </motion.div>
 
-      {/* Child 2 - Mobile: Row 1 (30% width), Desktop: Top-right (spans 2 rows) */}
+      {/* Child 2 - Mobile: Row 1, Desktop: Top-right (spans 2 rows) */}
       <motion.div
-        animate={getBlurStyle(2)}
+        animate={!isDesktop ? {} : getBlurStyle(2)}
         transition={{ duration: 0.2 }}
         onMouseEnter={() => setHoveredChild(2)}
         onMouseLeave={() => setHoveredChild(null)}
-        className="col-span-7 order-2 lg:col-span-1 lg:row-span-2 lg:order-none h-full select-none w-full rounded-xl bg-neutral-800 flex lg:flex-col items-center justify-start gap-3 py-5 p-3"
+        className="relative col-span-1 order-2 lg:col-span-1 lg:row-span-2 lg:order-0 h-full select-none w-full rounded-xl bg-neutral-800 flex flex-col lg:flex-col items-center justify-start gap-3 py-2 lg:py-5 p-2 lg:p-3 overflow-hidden min-h-0"
       >
-        <div>
+        <motion.div
+          animate={!isDesktop ? getBlurStyle(2) : {}}
+          transition={{ duration: 0.2 }}
+          className="w-full h-full lg:h-fit flex items-center justify-center min-h-0"
+        >
           <Image
             alt="laptop"
             width={300}
             height={100}
-            className="w-full aspect-2/1 object-contain"
+            className="w-full h-full object-contain"
             src="https://images.ctfassets.net/0uuz8ydxyd9p/63LUyUOjLIba5sPuJWis9B/350ec813d63fbaa4e6360a6a95098545/Group_1000001977.svg"
           />
-        </div>
-        <div className="flex flex-col gap-4 overflow-hidden">
+        </motion.div>
+        {/* Mobile hover overlay */}
+        <AnimatePresence>
+          {hoveredChild === 2 && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="lg:hidden absolute inset-0 bg-neutral-900/80 rounded-xl flex flex-col items-center justify-center p-2 gap-1"
+            >
+              <div className="text-neutral-100/90 tracking-normal text-sm font-light text-center leading-5">
+                Replace your brittle state machines
+              </div>
+              <div className="text-[13px] text-neutral-300/70 tracking-normal leading-4 font-light text-center">
+                Built-in retries, task queues, signals & timers
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        {/* Desktop content */}
+        <div className="hidden lg:flex flex-col gap-4 overflow-hidden">
           <div className="text-neutral-100/80 tracking-normal text-md font-light leading-5">
             Replace your brittle state machines
           </div>
-          <div className="text-[15px] text-neutral-300/65 tracking-normal leading-5 font-light hidden lg:flex lg:flex-col gap-1">
+          <div className="text-[15px] text-neutral-300/65 tracking-normal leading-5 font-light flex flex-col gap-1">
             The Temporal Service persists the state of your application and has
             built-in retries, task queues, signals, and timers, to make sure
             your code always picks up where it left off.
@@ -348,24 +429,48 @@ function Discover() {
         </div>
       </motion.div>
 
-      {/* Child 3 - Mobile: Row 3 (70% width), Desktop: Bottom-left (spans 2 rows) */}
+      {/* Child 3 - Mobile: Row 3, Desktop: Bottom-left (spans 2 rows) */}
       <motion.div
-        animate={getBlurStyle(3)}
+        animate={!isDesktop ? {} : getBlurStyle(3)}
         transition={{ duration: 0.2 }}
         onMouseEnter={() => setHoveredChild(3)}
         onMouseLeave={() => setHoveredChild(null)}
-        className="col-span-7 order-5 lg:col-span-1 lg:row-span-2 lg:order-none h-full select-none w-full rounded-xl bg-neutral-800 flex flex-col items-center justify-start gap-3 py-5 p-3"
+        className="relative col-span-2 order-5 lg:col-span-1 lg:row-span-2 lg:order-0 h-full select-none w-full rounded-xl bg-neutral-800 flex flex-col items-center justify-start gap-3 py-2 lg:py-5 p-2 lg:p-3 overflow-hidden min-h-0"
       >
-        <div>
+        <motion.div
+          animate={!isDesktop ? getBlurStyle(3) : {}}
+          transition={{ duration: 0.2 }}
+          className="w-full h-full lg:h-fit flex items-center justify-center min-h-0"
+        >
           <Image
             alt="laptop"
             width={300}
             height={100}
-            className="w-full aspect-2/1 object-contain"
+            className="w-full h-full object-contain"
             src="https://images.ctfassets.net/0uuz8ydxyd9p/4CPlZLoV4BIvyRXCe7ISPd/7b0ce8673455f064f2b05a5ca1cae215/magic-new.svg"
           />
-        </div>
-        <div className="flex flex-col gap-2 overflow-hidden">
+        </motion.div>
+        {/* Mobile hover overlay */}
+        <AnimatePresence>
+          {hoveredChild === 3 && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="lg:hidden absolute inset-0 bg-neutral-900/80 rounded-xl flex flex-col items-center justify-center p-2 gap-1"
+            >
+              <div className="text-neutral-100/90 tracking-normal text-sm font-light text-center leading-5">
+                You have to see it to believe it
+              </div>
+              <div className="text-[13px] text-neutral-300/70 tracking-normal leading-4 font-light text-center">
+                Durable Execution in the face of any failure
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        {/* Desktop content */}
+        <div className="hidden lg:flex flex-col gap-2 overflow-hidden">
           <div className="text-neutral-100/80 tracking-normal text-md font-light leading-5">
             You have to see it to believe it
           </div>
@@ -405,24 +510,45 @@ function Discover() {
         </div>
       </motion.div>
 
-      {/* Child 4 - Mobile: Row 3 (30% width), Desktop: Bottom-right */}
+      {/* Child 4 - Mobile: Row 3, Desktop: Bottom-right */}
       <motion.div
-        animate={getBlurStyle(4)}
+        animate={!isDesktop ? {} : getBlurStyle(4)}
         transition={{ duration: 0.2 }}
         onMouseEnter={() => setHoveredChild(4)}
         onMouseLeave={() => setHoveredChild(null)}
-        className="col-span-3 order-4 lg:col-span-1 lg:row-span-1 lg:order-none h-full select-none w-full rounded-xl bg-neutral-800 flex flex-col items-center justify-center gap-3 p-3"
+        className="relative col-span-1 order-4 lg:col-span-1 lg:row-span-1 lg:order-0 h-full select-none w-full rounded-xl bg-neutral-800 flex flex-col items-center justify-center gap-3 p-2 lg:p-3 overflow-hidden min-h-0"
       >
-        <div>
+        <motion.div
+          animate={!isDesktop ? getBlurStyle(4) : {}}
+          transition={{ duration: 0.2 }}
+          className="w-full h-full lg:h-fit flex items-center justify-center min-h-0"
+        >
           <Image
             alt="laptop"
             width={300}
             height={100}
-            className="w-full aspect-3/1 object-contain"
+            className="w-full h-full object-contain"
             src="https://images.ctfassets.net/0uuz8ydxyd9p/1YiCTIWs5UYzTv98YKzyK/6362b8f447f3ef62e8dd9a67d744b4dd/Happy_Laptop__2_.png?fm=avif&q=60"
           />
-        </div>
-        <div className="flex flex-col gap-1 overflow-hidden">
+        </motion.div>
+        {/* Mobile hover overlay */}
+        <AnimatePresence>
+          {hoveredChild === 4 && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="lg:hidden absolute inset-0 bg-neutral-900/80 rounded-xl flex flex-col items-center justify-center p-2"
+            >
+              <div className="text-neutral-100/90 tracking-normal text-sm font-light text-center leading-5">
+                Write code as if failure doesn't exist
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        {/* Desktop content */}
+        <div className="hidden lg:flex flex-col gap-1 overflow-hidden">
           <div className="text-neutral-100/80 tracking-normal text-md font-light text-center leading-5">
             Write code as if failure doesn't exist
           </div>
@@ -433,21 +559,33 @@ function Discover() {
 }
 
 function Enterprise() {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  // Check for desktop screen size
+  useEffect(() => {
+    const checkDesktop = () => setIsDesktop(window.innerWidth > 768);
+    checkDesktop();
+    window.addEventListener("resize", checkDesktop);
+    return () => window.removeEventListener("resize", checkDesktop);
+  }, []);
+
   return (
-    <div className=" w-full h-full  p-3 flex  ">
-      <div className="h-full  grid grid-rows-3 gap-2 ">
+    <div className=" w-full h-130 lg:h-full overflow-scroll lg:overflow-hidden mask-y mask-y-from-90% mask-y-to-110%  flex  ">
+      <div className="  grid grid-rows-[auto_auto_auto] lg:grid-rows-3   ">
         {enterprises.map((ep, index) => (
-          <div className="flex gap-4" key={index}>
-            <div className="h-full aspect-video ">
+          <div className="flex flex-col lg:flex-row gap-4 p-3" key={index}>
+            <div className={cn("lg:h-full   aspect-video")}>
               <Image
                 src={ep.thumb}
-                className="h-full aspect-video rounded-xl"
+                className="lg:h-full w-full aspect-video rounded-xl"
                 alt={ep.title}
-                height={180}
-                width={300}
+                height={isDesktop ? 180 : 180}
+                width={isDesktop ? 300 : 300}
               />
             </div>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 h-fit">
+              {/* <div className="h-10 w-10 bg-amber-200 "></div> */}
+
               <div className="flex flex-col gap-1">
                 <div className="text-neutral-100/80 tracking-tight text-md font-light leading-5">
                   {ep.title}
@@ -499,38 +637,54 @@ function Enterprise() {
 }
 
 function UseCases() {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  // Check for desktop screen size
+  useEffect(() => {
+    const checkDesktop = () => setIsDesktop(window.innerWidth > 768);
+    checkDesktop();
+    window.addEventListener("resize", checkDesktop);
+    return () => window.removeEventListener("resize", checkDesktop);
+  }, []);
+
   const useCaseIcons: Record<UseCaseTitle, React.ReactElement> = {
-    "Agents, MCP, & AI Pipelines": <Workflow size={18} />,
-    "Humans-in-the-Loop": <Users size={18} />,
-    "Compensating Patterns (Saga)": <RotateCcwSquare size={18} />,
-    "Long-running Workflows": <Timer size={18} />,
-    "Order Fulfillment": <PackageCheck size={18} />,
-    "Durable Ledgers": <Landmark size={18} />,
-    "CI/CD": <GitCompare size={18} />,
-    "Customer Acquisition": <UserPlus size={18} />,
-    DAG: <Network size={18} />,
+    "Agents, MCP, & AI Pipelines": <Workflow size={!isDesktop ? 14 : 18} />,
+    "Humans-in-the-Loop": <Users size={!isDesktop ? 14 : 18} />,
+    "Compensating Patterns (Saga)": (
+      <RotateCcwSquare size={!isDesktop ? 14 : 18} />
+    ),
+    "Long-running Workflows": <Timer size={!isDesktop ? 14 : 18} />,
+    "Order Fulfillment": <PackageCheck size={!isDesktop ? 14 : 18} />,
+    "Durable Ledgers": <Landmark size={!isDesktop ? 14 : 18} />,
+    "CI/CD": <GitCompare size={!isDesktop ? 14 : 18} />,
+    "Customer Acquisition": <UserPlus size={!isDesktop ? 14 : 18} />,
+    DAG: <Network size={!isDesktop ? 14 : 18} />,
   };
   return (
-    <div className=" grid grid-cols-3 grid-rows-3 h-full gap-2 p-3 select-none">
+    <div className=" grid grid-cols-2 h-full  mask-y mask-y-from-90% mask-y-to-110% overflow-scroll lg:overflow-hidden lg:grid-cols-3 lg:grid-rows-3  gap-2 p-3 select-none">
       {useCases.map((use, index) => (
         <motion.div
           initial={{
             scale: 1,
             y: 0,
-            maskImage:
-              "linear-gradient(to bottom, black 0%, black 10%, transparent 100%)",
+            // maskImage:
+            //   "linear-gradient(to bottom, black 0%, black 10%, transparent 100%)",
           }}
           animate={{
             scale: 1,
             y: 0,
-            maskImage:
-              "linear-gradient(to bottom, black 0%, black 10%, transparent 100%)",
+            backgroundColor: "var(--color-neutral-800)",
+            // maskImage:
+            //   "linear-gradient(to bottom, black 0%, black 10%, transparent 100%)",
           }}
           whileHover={{
-            y: -15,
-            scale: 1.04,
-            maskImage:
-              "linear-gradient(to bottom, black 0%, black 75%, transparent 105%)",
+            // y: -15,
+            scale: 1.06,
+            zIndex: 10,
+            backgroundColor: "var(--color-neutral-800)",
+
+            // maskImage:
+            //   "linear-gradient(to bottom, black 0%, black 75%, transparent 105%)",
           }}
           transition={{
             type: "spring",
@@ -540,21 +694,21 @@ function UseCases() {
           }}
           style={{ willChange: "transform, mask-image" }}
           key={index}
-          className="group flex flex-col gap-1 bg-neutral-800 rounded-xl p-3"
+          className="group flex relative flex-col gap-1 shadow-[0px_0px_20px_rgba(0,0,0,0.3)]   rounded-xl p-3"
         >
           <div
             style={{ willChange: "transform" }}
             className="flex flex-col gap-1 items-start tracking-tight"
           >
-            <div className="group-hover:text-neutral-50 text-neutral-300 transition-all duration-200 tracking-tight text-md font-light text-center leading-5 ">
+            <div className="hidden lg:block group-hover:text-neutral-50 text-neutral-300 transition-all duration-200 tracking-tight   text-md font-light  lg:text-center leading-5 ">
               {useCaseIcons[use.title]}
             </div>
 
-            <div className="text-neutral-100/80 tracking-tight text-md font-light text-center leading-5">
+            <div className="text-neutral-100/80 tracking-tight text-sm lg:text-lg font-light lg:text-start leading-5 text-start items-start justify-center ">
               {use.title}
             </div>
           </div>
-          <div className="text-[15px] text-neutral-300/65 tracking-normal leading-5 font-light flex flex-col gap-1">
+          <div className=" text-[12px] lg:text-[15px] text-neutral-300/65 tracking-normal leading-4  lg:leading-5 font-light flex flex-col gap-1">
             {use.description}
           </div>
         </motion.div>

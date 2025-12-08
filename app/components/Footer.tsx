@@ -7,6 +7,7 @@ import Logo from "./Logo";
 import { Send } from "lucide-react";
 
 import { Youtube, Twitter, Github, Linkedin, Slack } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export const socialIcons: Record<string, any> = {
   YouTube: Youtube,
@@ -16,6 +17,18 @@ export const socialIcons: Record<string, any> = {
   Slack: Slack,
 };
 export default function Footer() {
+  const [isDesktop, setIsDesktop] = useState(true);
+  useEffect(() => {
+    const checkDesktop = () => {
+      if (typeof window !== undefined && window.innerWidth <= 768) {
+        setIsDesktop(false);
+      } else {
+        setIsDesktop(true);
+      }
+      window.addEventListener("resize", checkDesktop);
+      return window.removeEventListener("resize", checkDesktop);
+    };
+  }, []);
   return (
     <div
       // initial={{ y: 150 }}
@@ -41,15 +54,7 @@ export default function Footer() {
               return (
                 <Link href={social.href} key={social.name + index}>
                   <button className="hover:text-green-300 cursor-pointer">
-                    {
-                      <Icon
-                        size={
-                          typeof window !== undefined && window.innerWidth > 768
-                            ? 22
-                            : 18
-                        }
-                      />
-                    }
+                    {<Icon size={isDesktop ? 22 : 18} />}
                   </button>
                 </Link>
               );
