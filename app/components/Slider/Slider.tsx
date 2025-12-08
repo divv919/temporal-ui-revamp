@@ -18,8 +18,8 @@ export default function Slider() {
     };
   }, []);
   return (
-    <div className="mt-90 w-full h-120  px-40  relative flex gap-16 ">
-      <div className="w-1/2 flex flex-col   gap-10">
+    <div className="mt-60 lg:mt-90 w-full h-120  px-6 lg:px-40  relative flex flex-col-reverse lg:flex-row gap-8 lg:gap-16 ">
+      <div className="w-full h-1/2 lg:h-full lg:w-1/2 flex flex-col gap-4 lg:gap-10">
         {sliderData.map((slide, index) => {
           return (
             <motion.div
@@ -57,15 +57,15 @@ export default function Slider() {
                     initial={{ height: "0%" }}
                     animate={{ height: "100%", opacity: 1 }}
                     transition={{ duration: 6, ease: "linear" }}
-                    className="absolute w-[1px] bg-green-200 inset-0 -left-2"
+                    className="absolute w-[1px] bg-green-200 inset-0 lg:-left-2"
                   ></motion.div>
                 )}
               </AnimatePresence>
-              <motion.div layout className="flex flex-col gap-0">
-                <div className="text-lg text-green-600 font-medium tracking-tight">
+              <motion.div layout className="flex flex-col gap-2  lg:gap-0">
+                <div className="text-xs leading-3 lg:leading-7 lg:text-lg text-green-600 font-medium tracking-tight">
                   {slide.pretitle}
                 </div>
-                <div className="text-4xl text-green-50 font-light tracking-tight">
+                <div className="text-md leading-5 lg:leading-11 lg:text-4xl text-green-50 font-normal lg:font-light tracking-tight">
                   {slide.title}
                 </div>
               </motion.div>
@@ -81,7 +81,7 @@ export default function Slider() {
                     opacity: 0,
                   }}
                   animate={{ filter: "blur(0px)", opacity: 1 }}
-                  className="text-[17px]  tracking-normal text-neutral-300/85 font-light"
+                  className="text-xs leading-4 lg:leading-6 lg:text-[17px]  tracking-normal text-neutral-300/85 font-light"
                 >
                   {slide.description}
                 </motion.div>
@@ -90,7 +90,7 @@ export default function Slider() {
           );
         })}
       </div>
-      <motion.div className="h-full w-1/2 flex items-center justify-center bg-linear-45 from-neutral-800/20 to-neutral-600/20 backdrop-blur-3xl shadow-[inset_0px_0px_20px_rgba(255,255,255,0.1)] rounded-xl p-8">
+      <motion.div className="h-60 lg:h-full w-full lg:w-1/2 flex items-center justify-center bg-linear-45 from-neutral-800/20 to-neutral-600/20 backdrop-blur-3xl shadow-[inset_0px_0px_20px_rgba(255,255,255,0.1)] rounded-xl lg:p-8">
         <AnimatePresence mode="wait">
           <MotionImage
             key={currentSlide + "image-key"}

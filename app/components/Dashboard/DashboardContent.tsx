@@ -93,7 +93,7 @@ function StarterCode({
     <div className="flex flex-col px-3 ">
       <div className="border-b border-neutral-800 flex justify-between items-center">
         <div
-          className="relative flex items-center gap-2 text-sm tracking-tight font-light text-neutral-500 py-2"
+          className="relative flex items-center gap-1 lg:gap-2 text-sm tracking-tight font-light text-neutral-500 py-2"
           onMouseLeave={() => setCurrentHover(null)}
         >
           {languages.map((language, index) => {
@@ -106,7 +106,7 @@ function StarterCode({
                 key={index}
                 onClick={() => setCurrentCodeLanguage(language)}
                 className={cn(
-                  "transition-colors duration-150",
+                  "transition-colors duration-150 text-xs lg:text-md",
                   isActive && "text-neutral-50/70",
                   "relative cursor-pointer px-2 py-1"
                 )}
@@ -151,7 +151,13 @@ function StarterCode({
                   ease: "easeInOut",
                 }}
               >
-                <Check size={16} />
+                <Check
+                  size={
+                    typeof window !== undefined && window.innerWidth > 768
+                      ? 16
+                      : 14
+                  }
+                />
               </motion.div>
             ) : (
               <motion.div
@@ -172,7 +178,13 @@ function StarterCode({
                   ease: "easeInOut",
                 }}
               >
-                <Copy size={16} />
+                <Copy
+                  size={
+                    typeof window !== undefined && window.innerWidth > 768
+                      ? 16
+                      : 14
+                  }
+                />
               </motion.div>
             )}
           </AnimatePresence>
@@ -213,15 +225,15 @@ function Discover() {
         setIsParentHovered(false);
         setHoveredChild(null);
       }}
-      className="gap-2 h-full p-3 grid grid-rows-3 grid-cols-3"
+      className="gap-2 h-full p-3 grid grid-cols-10 lg:grid-rows-3 lg:grid-cols-3"
     >
-      {/* Child 0 */}
+      {/* Child 0 - Mobile: Row 1 (70% width), Desktop: Top-left */}
       <motion.div
         animate={getBlurStyle(0)}
         transition={{ duration: 0.2 }}
         onMouseEnter={() => setHoveredChild(0)}
         onMouseLeave={() => setHoveredChild(null)}
-        className="row-span-1 h-full select-none w-full rounded-xl bg-neutral-800 flex flex-col items-center justify-center gap-3 p-3"
+        className="col-span-3 order-1 lg:col-span-1 lg:row-span-1 lg:order-none h-full select-none w-full rounded-xl bg-neutral-800 flex flex-col items-center justify-center gap-3 p-3"
       >
         <div>
           <Image
@@ -239,13 +251,13 @@ function Discover() {
         </div>
       </motion.div>
 
-      {/* Child 1 */}
+      {/* Child 1 - Mobile: Row 2 (full width), Desktop: Center column (tall) */}
       <motion.div
         animate={getBlurStyle(1)}
         transition={{ duration: 0.2 }}
         onMouseEnter={() => setHoveredChild(1)}
         onMouseLeave={() => setHoveredChild(null)}
-        className="row-span-3 h-full select-none w-full rounded-xl bg-neutral-800 flex flex-col items-center justify-start gap-3 py-5 p-3"
+        className="col-span-10 order-3 lg:col-span-1 lg:row-span-3 lg:order-none h-full select-none w-full rounded-xl bg-neutral-800 flex flex-col items-center justify-start gap-3 py-5 p-3"
       >
         <div>
           <Image
@@ -307,13 +319,13 @@ function Discover() {
         </div>
       </motion.div>
 
-      {/* Child 2 */}
+      {/* Child 2 - Mobile: Row 1 (30% width), Desktop: Top-right (spans 2 rows) */}
       <motion.div
         animate={getBlurStyle(2)}
         transition={{ duration: 0.2 }}
         onMouseEnter={() => setHoveredChild(2)}
         onMouseLeave={() => setHoveredChild(null)}
-        className="row-span-2 h-full select-none w-full rounded-xl bg-neutral-800 flex flex-col items-center justify-start gap-3 py-5 p-3"
+        className="col-span-7 order-2 lg:col-span-1 lg:row-span-2 lg:order-none h-full select-none w-full rounded-xl bg-neutral-800 flex lg:flex-col items-center justify-start gap-3 py-5 p-3"
       >
         <div>
           <Image
@@ -328,7 +340,7 @@ function Discover() {
           <div className="text-neutral-100/80 tracking-normal text-md font-light leading-5">
             Replace your brittle state machines
           </div>
-          <div className="text-[15px] text-neutral-300/65 tracking-normal leading-5 font-light flex flex-col gap-1">
+          <div className="text-[15px] text-neutral-300/65 tracking-normal leading-5 font-light hidden lg:flex lg:flex-col gap-1">
             The Temporal Service persists the state of your application and has
             built-in retries, task queues, signals, and timers, to make sure
             your code always picks up where it left off.
@@ -336,13 +348,13 @@ function Discover() {
         </div>
       </motion.div>
 
-      {/* Child 3 */}
+      {/* Child 3 - Mobile: Row 3 (70% width), Desktop: Bottom-left (spans 2 rows) */}
       <motion.div
         animate={getBlurStyle(3)}
         transition={{ duration: 0.2 }}
         onMouseEnter={() => setHoveredChild(3)}
         onMouseLeave={() => setHoveredChild(null)}
-        className="row-span-2 h-full select-none w-full rounded-xl bg-neutral-800 flex flex-col items-center justify-start gap-3 py-5 p-3"
+        className="col-span-7 order-5 lg:col-span-1 lg:row-span-2 lg:order-none h-full select-none w-full rounded-xl bg-neutral-800 flex flex-col items-center justify-start gap-3 py-5 p-3"
       >
         <div>
           <Image
@@ -393,13 +405,13 @@ function Discover() {
         </div>
       </motion.div>
 
-      {/* Child 4 */}
+      {/* Child 4 - Mobile: Row 3 (30% width), Desktop: Bottom-right */}
       <motion.div
         animate={getBlurStyle(4)}
         transition={{ duration: 0.2 }}
         onMouseEnter={() => setHoveredChild(4)}
         onMouseLeave={() => setHoveredChild(null)}
-        className="row-span-1 h-full select-none w-full rounded-xl bg-neutral-800 flex flex-col items-center justify-center gap-3 p-3"
+        className="col-span-3 order-4 lg:col-span-1 lg:row-span-1 lg:order-none h-full select-none w-full rounded-xl bg-neutral-800 flex flex-col items-center justify-center gap-3 p-3"
       >
         <div>
           <Image

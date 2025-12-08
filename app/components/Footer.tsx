@@ -17,22 +17,22 @@ export const socialIcons: Record<string, any> = {
 };
 export default function Footer() {
   return (
-    <motion.div
-      initial={{ y: 150 }}
-      transition={{
-        // delay: 0.,
-        duration: 1.5,
-        ease: [0, 0.71, 0.2, 1.01],
-      }}
-      whileInView={{ y: 0 }}
-      className="relative mt-60 h-fit w-full px-4 "
+    <div
+      // initial={{ y: 150 }}
+      // transition={{
+      //   // delay: 0.,
+      //   duration: 1.5,
+      //   ease: [0, 0.71, 0.2, 1.01],
+      // }}
+      // whileInView={{ y: 0 }}
+      className="relative mt-30  lg:mt-60 h-fit w-full px-4 "
     >
-      <div className="tracking-tight px-20 py-10 bg-green-950/60 relative w-full h-full rounded-t-2xl flex flex-col gap-4">
+      <div className="tracking-tight px-4 lg:px-20 py-6 lg:py-10 bg-green-950/60 relative w-full h-full rounded-t-2xl flex flex-col gap-4">
         <div className="absolute -bottom-1/10   pointer-events-none  right-1/2 translate-x-1/2 opacity-3">
           <Logo size={200} />
         </div>
         <div className="flex justify-between  ">
-          <div className="text-lg font-mono border border-green-50/10 px-2 py-1">
+          <div className="text-[12px] lg:text-lg font-mono border border-green-50/10 px-2 py-1">
             {footerData.status}
           </div>
           <div className="flex gap-4 ">
@@ -41,26 +41,37 @@ export default function Footer() {
               return (
                 <Link href={social.href} key={social.name + index}>
                   <button className="hover:text-green-300 cursor-pointer">
-                    {<Icon size={22} />}
+                    {
+                      <Icon
+                        size={
+                          typeof window !== undefined && window.innerWidth > 768
+                            ? 22
+                            : 18
+                        }
+                      />
+                    }
                   </button>
                 </Link>
               );
             })}
           </div>
         </div>
-        <div className="h-fit w-full flex justify-between tracking-tight">
+        <div className="h-fit w-full flex lg:flex-row flex-col gap-8 lg:gap-0 justify-between tracking-tight">
           {footerData.sections.map((st, index) => {
             return (
-              <div key={st.title + index} className="flex flex-col gap-2">
-                <div className="text-lg text-green-300 font-medium">
+              <div
+                key={st.title + index}
+                className="flex flex-col gap-3 lg:gap-2"
+              >
+                <div className="text-lg lg:text-lg text-green-300 font-medium">
                   {st.title}
                 </div>
-                <div className="flex gap-1 flex-col font-light">
+                <div className="flex gap-2 lg:gap-1 flex-col font-light">
                   {st.links.map((link, index) => {
                     return (
                       <div
                         key={index + link.label}
-                        className="text-green-50 hover:text-green-300 cursor-pointer"
+                        className="text-md lg:text-lg text-green-50 hover:text-green-300 cursor-pointer"
                       >
                         <Link href={link.href}>
                           <div>{link.label}</div>
@@ -85,6 +96,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

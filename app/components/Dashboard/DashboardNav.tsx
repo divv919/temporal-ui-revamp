@@ -5,9 +5,13 @@ export default function DashboardNav() {
   return (
     <div className=" flex justify-between w-full h-fit   rounded-[inherit]">
       <div className="w-fit">
-        <Logo size={24} />
+        <Logo
+          size={
+            typeof window !== undefined && window.innerWidth > 768 ? 24 : 22
+          }
+        />
       </div>
-      <div className="h-fit flex gap-2 rounded-xl items-center px-3 py-2  bg-neutral-900 ">
+      <div className="h-fit  gap-2 rounded-xl items-center px-3 py-2  bg-neutral-900 hidden lg:flex">
         <Search size={18} className="text-neutral-600" />
         <input
           className="h-fit focus:outline-0  text-sm"
@@ -15,7 +19,7 @@ export default function DashboardNav() {
         />
       </div>
       <div className="flex gap-2 h-fit">
-        <div className="flex flex-col mx-1">
+        <div className="hidden lg:flex flex-col mx-1">
           <div className="text-md font-medium tracking-tight text-neutral-200">
             Divyansh Swarnkar
           </div>

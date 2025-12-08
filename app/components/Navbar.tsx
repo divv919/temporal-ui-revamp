@@ -6,17 +6,18 @@ import {
   useMotionValueEvent,
   useScroll,
 } from "motion/react";
-import { ChevronRight } from "lucide-react";
 import { navbarConstants } from "../lib/constants";
 import { ButtonVariants } from "../types/component";
 import Logo from "./Logo";
 import Button from "./ui/button";
 import { cn } from "../lib/util";
-import { useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
+import { MenuIcon, X } from "lucide-react";
 
 export default function Navbar() {
   const { scrollYProgress } = useScroll();
   const [isNavbarShrinked, setIsNavbarShrinked] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   useMotionValueEvent(scrollYProgress, "change", (val) => {
     if (scrollYProgress.get() > 0) {
       setIsNavbarShrinked(true);
@@ -24,29 +25,37 @@ export default function Navbar() {
       setIsNavbarShrinked(false);
     }
   });
+
+  useEffect(() => {
+    console.log("isMenuOpen", isMenuOpen);
+  }, [isMenuOpen]);
   return (
     <motion.div
       animate={{
-        width: isNavbarShrinked ? "80%" : "97%",
+        width:
+          typeof window !== undefined && window.innerWidth < 768
+            ? "100%"
+            : isNavbarShrinked
+            ? "80%"
+            : "97%",
         boxShadow: isNavbarShrinked
           ? "inset 0px 0px 24px rgba(255,255,255,0.1)"
           : "none",
         backgroundColor: isNavbarShrinked
-          ? "var(--color-neutral-800)/80"
+          ? "rgba(38, 38, 38, 0.8)"
           : "transparent",
       }}
       transition={{
         duration: 0.1,
-        // ease: easeInOut,
       }}
       className={cn(
-        "fixed overflow-hidden top-0  rounded-2xl my-2 z-100   h-fit px-6 py-5  flex justify-between items-center transition-all duration-150",
-        "  backdrop-blur-3xl  "
+        "fixed  top-0 w-[100%] lg:w-[97%]  lg:rounded-2xl lg:my-2 z-1000   h-fit px-7 py-[20px] lg:px-6 lg:py-5  flex justify-between items-center transition-all duration-150",
+        "  backdrop-blur-xl  "
       )}
     >
       <AnimatePresence>
         {isNavbarShrinked && (
-          <>
+          <div className="w-full h-full overflow-hidden lg:rounded-2xl absolute inset-0">
             <motion.div
               key={"bg-gradient-1"}
               initial={{
@@ -95,25 +104,27 @@ export default function Navbar() {
               }}
               className="absolute blur-2xl right-25 h-8 w-28 bg-green-50/50 -z-10"
             ></motion.div>
-          </>
+          </div>
         )}
       </AnimatePresence>
 
-      <Logo size={24} />
+      <Logo
+        size={typeof window !== undefined && window.innerWidth > 768 ? 24 : 22}
+      />
       {/* </div> */}
       <motion.div
         animate={{ gap: isNavbarShrinked ? "200px" : "48px" }}
         className={cn(
-          "flex w-full  justify-end items-center"
+          "flex w-full  justify-end items-center gap-[48px]"
           // isNavbarShrinked ? "gap-50" : "gap-12"
         )}
       >
-        <div className="flex gap-6">
+        <div className="gap-6 hidden lg:flex">
           {navbarConstants.links.map((link, index) => {
             return <TextRoll key={index} text={link.name}></TextRoll>;
           })}
         </div>
-        <div className="flex gap-4">
+        <div className=" gap-4 hidden lg:flex">
           {navbarConstants.buttons.map((button, index) => {
             return (
               <Button
@@ -130,8 +141,68 @@ export default function Navbar() {
             );
           })}
         </div>
+        {
+          <motion.div
+            initial={{ translateX: "-100%" }}
+            animate={{
+              translateX: isMenuOpen ? "0%" : "-100%",
+            }}
+            transition={{
+              duration: 0.2,
+              ease: "easeInOut",
+            }}
+            className="absolute h-[100vh] inset-0 w-[100vw] lg:hidden"
+          >
+            <Menu setIsMenuOpen={setIsMenuOpen} />
+          </motion.div>
+        }
+        <div onClick={() => setIsMenuOpen(true)} className=" lg:hidden">
+          <MenuIcon size={22} />
+        </div>
       </motion.div>
     </motion.div>
+  );
+}
+
+function Menu({
+  setIsMenuOpen,
+}: {
+  setIsMenuOpen: React.Dispatch<SetStateAction<boolean>>;
+}) {
+  return (
+    <div className="absolute inset-0 w-[100vw] h-[100vh] bg-neutral-950 gap-16 flex flex-col px-7 py-[20px] ">
+      <div className="flex justify-between">
+        <Logo size={22} />
+        <X onClick={() => setIsMenuOpen(false)} color="white" />
+      </div>
+
+      <div className="h-full w-full  flex flex-col gap-7 px-1">
+        {navbarConstants.links.map((link, index) => {
+          return (
+            <div className="text-lg" key={index}>
+              {link.name}
+            </div>
+          );
+        })}
+        <div className="flex justify-center gap-6 mt-5">
+          {navbarConstants.buttons.map((button, index) => {
+            return (
+              <Button
+                key={index + button.name}
+                variant={button.type as unknown as ButtonVariants}
+                className={cn(
+                  "flex gap-1 items-center ",
+                  button.name === "Get Started" && "pr-[17px]"
+                )}
+              >
+                {button.name}
+                {/* {button.name === "Get Started" && <ChevronRight size={20} />} */}
+              </Button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
   );
 }
 

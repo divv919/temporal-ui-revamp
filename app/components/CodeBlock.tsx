@@ -14,6 +14,10 @@ export default function CodeBlock({
       style={atomOneDark}
       customStyle={{
         backgroundColor: "transparent",
+        fontSize:
+          typeof window !== undefined && window.innerWidth > 768
+            ? "16px"
+            : "12px",
       }}
     >
       {code}

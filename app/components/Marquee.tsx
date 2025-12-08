@@ -98,7 +98,7 @@ export default function Marquee() {
   }, []);
 
   return (
-    <div className=" relative w-full overflow-hidden py-12 mt-30">
+    <div className=" relative w-full overflow-hidden py-12 mt-15 lg:mt-30 select-none">
       {/* Mask effect - fade from left and right */}
       <div className=" absolute z-10 w-full h-full inset-0  pointer-events-none  bg-linear-to-r from-zinc-50 via-transparent to-zinc-50 dark:from-neutral-950 dark:via-neutral-transparent dark:to-neutral-950 "></div>
 
@@ -106,7 +106,7 @@ export default function Marquee() {
       <motion.div
         id="scroll-container-marquee"
         initial={{ x: "0%" }}
-        className="flex    gap-16"
+        className="flex   gap-8  lg:gap-16"
       >
         {duplicatedIcons.map((icon, index) => {
           if (!icon.data) return null;
@@ -130,13 +130,13 @@ export default function Marquee() {
                 role="img"
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-12 h-12 opacity-100 fill-[#737373] group-hover:fill-[#fafafa] transition-all duration-300"
+                className="size-6 lg:w-12 lg:h-12 opacity-100 fill-[#737373] group-hover:fill-[#fafafa] transition-all duration-300"
                 // fill={`#737373`}
               >
                 <title>{icon.data.title}</title>
                 <path d={icon.data.path} />
               </svg>
-              <div className="text-2xl group-hover:text-neutral-50 transition-all duration-300 text-neutral-500 opacity-100  tracking-tight font-bold">
+              <div className=" lg:text-2xl group-hover:text-neutral-50 transition-all duration-300 text-neutral-500 opacity-100  tracking-tight font-bold">
                 {icon.data.title}
               </div>
             </div>

@@ -22,15 +22,15 @@ export default function Home() {
       <div className="w-[70%] h-[30%] blur-3xl  -translate-x-1/2 rounded-full opacity-2 bg-neutral-100 top-0 left-1/2 absolute -translate-y-1/2"></div>
       <div className="relative w-full   h-250">
         <Gradient />
-        <div className="w-[50%] py-20 flex flex-col gap-5 mx-auto ">
-          <div className="text-[80px] leading-19 text-center tracking-tight font-medium text-neutral-200">
+        <div className="w-[80%] lg:w-[50%] py-20 flex flex-col gap-5 mx-auto relative z-100">
+          <div className="text-[43px] leading-11 lg:text-[80px] lg:leading-19 text-center tracking-tight font-medium text-neutral-200">
             {headerTitle}
           </div>
-          <div className="tracking-tight  text-center z-10 text-lg leading-5 text-neutral-500">
+          <div className="lg:tracking-tight leading-6  text-center z-10 text-sm lg:text-lg lg:leading-5 text-neutral-400">
             {headerSubtitle}
           </div>
           <div className="mx-auto shadow-[0px_10px_20px] rounded-md shadow-green-400/12 w-fit">
-            <Button className="w-fit mx-auto px-6 py-3 text-lg">
+            <Button className="w-fit mx-auto lg:px-6 lg:py-3 lg:text-lg">
               <div className="flex gap-1 items-center ">
                 Join For Free{" "}
                 <div className="-mr-1">

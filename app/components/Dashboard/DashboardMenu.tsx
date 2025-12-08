@@ -20,14 +20,14 @@ export default function DashboardMenu({
   currentSection: DashboardSections;
 }) {
   return (
-    <div className="tracking-tight text-sm text-neutral-500 h-full w-[20%] flex flex-col gap-1 rounded-xl border border-neutral-800 bg-neutral-900 px-0 py-3">
+    <div className="tracking-tight text-sm text-neutral-500 h-fit w-full lg:h-full lg:w-[20%] flex lg:flex-col justify-between lg:justify-start  lg:gap-1 rounded-xl border border-neutral-800 bg-neutral-900  px-0 pr-3  lg:px-0 py-3">
       {dashboardSections.map((section, index) => {
         return (
           <div
             key={index}
             onClick={() => setCurrentSection(section)}
             className={cn(
-              "flex gap-2 items-center cursor-pointer relative px-4 w-fit bg-transparent hover:text-neutral-200   py-1 transition-all duration-200 ease-in-out",
+              "flex  gap-0 lg:gap-2 items-center cursor-pointer relative px-2  lg:px-3 lg:px-4 w-fit bg-transparent hover:text-neutral-200   py-1 transition-all duration-200 ease-in-out",
               currentSection === section && "text-neutral-50"
               // ? "bg-linear-0 gap-1 from-green-500 mx-2 to-green-800 px-2 flex-nowrap py-1 rounded-md text-green-100"
             )}
@@ -45,12 +45,12 @@ export default function DashboardMenu({
                   },
                 }}
                 layoutId="bg-dashboard-menu"
-                className="absolute inset-0 w-full h-full  pr-[8px]"
+                className="absolute inset-0 w-full h-full   lg:pr-[8px]"
               >
                 <div className="w-full h-full bg-linear-0 from-green-500 mx-2 to-green-800 rounded-lg"></div>
               </motion.div>
             )}
-            <span className="relative z-[100] flex items-center gap-2">
+            <span className="relative  z-[100] flex items-center lg:gap-2">
               <span
                 className={cn(
                   "rounded-full p-1 bg-neutral-800 ",
@@ -58,8 +58,10 @@ export default function DashboardMenu({
                 )}
               >
                 {sectionToIcon[section]}
-              </span>{" "}
-              {section}
+              </span>
+              <span className="text-[10px] lg:text-[14px] lg:block ">
+                {section}
+              </span>
             </span>
           </div>
         );

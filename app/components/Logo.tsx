@@ -1,7 +1,7 @@
 import { Layers, Layers2 } from "lucide-react";
 import { cn } from "../lib/util";
 
-export default function Logo({ size = 60 }: { size: number }) {
+export default function Logo({ size = 30 }: { size: number }) {
   return (
     <div
       className={cn(
@@ -13,13 +13,14 @@ export default function Logo({ size = 60 }: { size: number }) {
         {/* <Layers size={size} /> */}
         <LogoSVG />
       </div>
-      Temporal
+      <span>Temporal</span>
       <div className="absolute bottom-1    blur-sm w-full h-2 bg-green-500/4  "></div>
     </div>
   );
 }
 
 function LogoSVG() {
+  const isDesktop = typeof window !== undefined && window.innerWidth > 768;
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -28,8 +29,8 @@ function LogoSVG() {
       id="Layer_3"
       x="0px"
       y="0px"
-      height={30}
-      width={30}
+      height={isDesktop ? 30 : 28}
+      width={isDesktop ? 30 : 28}
       viewBox="350 350 500 500"
       enableBackground={"new 0 0 1200 1200"}
       xmlSpace="preserve"
