@@ -35,9 +35,9 @@ export default function Footer() {
       //   ease: [0, 0.71, 0.2, 1.01],
       // }}
       // whileInView={{ y: 0 }}
-      className="relative mt-30  lg:mt-60 h-fit w-full px-4 "
+      className="relative mt-30  lg:mt-50 xl:mt-60 h-fit w-full px-4 "
     >
-      <div className="tracking-tight px-7 lg:px-20 py-6 lg:py-10 bg-green-950/60 relative w-full h-full rounded-t-2xl flex flex-col gap-4">
+      <div className="tracking-tight px-7 xl:px-20 py-6 xl:py-10 bg-green-950/60 relative w-full h-full rounded-t-2xl flex flex-col gap-4">
         <div className="absolute -bottom-0 lg:-bottom-1/10  pointer-events-none  right-1/2 translate-x-1/2 opacity-3">
           <Logo size={isDesktop ? 200 : 60} />
         </div>

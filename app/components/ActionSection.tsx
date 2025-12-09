@@ -19,7 +19,7 @@ export default function ActionSection() {
         duration: 1.5,
         ease: [0, 0.71, 0.2, 1.01],
       }}
-      className="w-full h-60 lg:h-100 px-5 lg:px-25  mt-20 lg:mt-40"
+      className="w-full h-60 lg:h-100 px-5 lg:px-10 xl:px-25  mt-20 lg:mt-40"
     >
       <div className="w-full h-full shadow-green-500/10 shadow-xl tracking-tight bg-green-700/30 flex flex-col gap-0 justify-center items-center relative rounded-2xl overflow-hidden">
         <motion.div

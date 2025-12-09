@@ -73,7 +73,7 @@ export default function DashboardMenu({
               >
                 {sectionToIcon[section]}
               </span>
-              <span className="text-[11px] lg:text-[14px] lg:block ">
+              <span className="text-[11px] md:text-[13px] lg:text-[14px] lg:block ">
                 {section}
               </span>
             </span>

@@ -13,6 +13,7 @@ import Button from "./ui/button";
 import { cn } from "../lib/util";
 import { SetStateAction, useEffect, useState } from "react";
 import { MenuIcon, X } from "lucide-react";
+import { useMediaQuery } from "../hooks/useMediaQuery";
 
 export default function Navbar() {
   const { scrollYProgress } = useScroll();
@@ -34,13 +35,15 @@ export default function Navbar() {
     }
   });
 
-  useEffect(() => {
-    console.log("isMenuOpen", isMenuOpen);
-  }, [isMenuOpen]);
+  const is1440 = useMediaQuery("(min-width: 1440px)");
+  const is1024 = useMediaQuery("(min-width: 1024px)");
+  const is768 = useMediaQuery("(min-width: 768px)");
+  const is425 = useMediaQuery("(min-width: 425px)");
+
   return (
     <motion.div
       animate={{
-        width: !isDesktop ? "100%" : isNavbarShrinked ? "80%" : "97%",
+        width: !is1440 ? "100%" : isNavbarShrinked ? "80%" : "97%",
         boxShadow: isNavbarShrinked
           ? "inset 0px 0px 24px rgba(255,255,255,0.1)"
           : "none",
@@ -52,13 +55,13 @@ export default function Navbar() {
         duration: 0.1,
       }}
       className={cn(
-        "fixed  top-0 w-[100%] lg:w-[97%]  lg:rounded-2xl lg:my-2 z-1000   h-fit px-7 py-[20px] lg:px-6 lg:py-5  flex justify-between items-center transition-all duration-150",
+        "fixed  top-0 w-[100%] xl:w-[97%] xl:w-[97%]  xl:rounded-2xl xl:my-2 z-1000   h-fit px-7 py-[20px] xl:px-6 lg:py-5  flex justify-between items-center transition-all duration-150",
         "  backdrop-blur-xl  "
       )}
     >
       <AnimatePresence>
         {isNavbarShrinked && (
-          <div className="w-full h-full overflow-hidden lg:rounded-2xl absolute inset-0">
+          <div className="w-full h-full overflow-hidden xl:rounded-2xl absolute inset-0 pointer-events-none">
             <motion.div
               key={"bg-gradient-1"}
               initial={{
@@ -73,7 +76,7 @@ export default function Navbar() {
               transition={{
                 duration: 0.4,
               }}
-              className="absolute blur-2xl  h-8 w-28 bg-green-400/50"
+              className="absolute blur-2xl pointer-events-none  h-8 w-28 bg-green-400/50"
             ></motion.div>
             <motion.div
               key={"bg-gradient-2"}
@@ -89,7 +92,7 @@ export default function Navbar() {
               transition={{
                 duration: 0.4,
               }}
-              className="absolute blur-2xl right-5 h-8 w-28 bg-green-400/80 -z-10"
+              className="absolute blur-2xl pointer-events-none right-5 h-8 w-28 bg-green-400/80 -z-10"
             ></motion.div>
             <motion.div
               key={"bg-gradient-3"}
@@ -105,16 +108,24 @@ export default function Navbar() {
               transition={{
                 duration: 0.4,
               }}
-              className="absolute blur-2xl right-25 h-8 w-28 bg-green-50/50 -z-10"
+              className="absolute blur-2xl pointer-events-none right-25 h-8 w-28 bg-green-50/50 -z-10"
             ></motion.div>
           </div>
         )}
       </AnimatePresence>
 
-      <Logo size={isDesktop ? 24 : 22} />
+      <Logo size={is1024 ? 24 : 22} />
       {/* </div> */}
       <motion.div
-        animate={{ gap: isNavbarShrinked ? "200px" : "48px" }}
+        animate={{
+          gap: is1440
+            ? isNavbarShrinked
+              ? "200px"
+              : "48px"
+            : isNavbarShrinked
+            ? "48px"
+            : "48px",
+        }}
         className={cn(
           "flex w-full  justify-end items-center gap-[48px]"
           // isNavbarShrinked ? "gap-50" : "gap-12"

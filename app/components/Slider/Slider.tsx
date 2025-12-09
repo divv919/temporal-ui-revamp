@@ -18,8 +18,8 @@ export default function Slider() {
     };
   }, []);
   return (
-    <div className="mt-60 lg:mt-90 w-full h-120  px-6 lg:px-40  relative flex flex-col-reverse lg:flex-row gap-8 lg:gap-16 ">
-      <div className="w-full h-1/2 lg:h-full lg:w-1/2 flex flex-col gap-4 lg:gap-10">
+    <div className="mt-60 lg:mt-70 xl:mt-90 w-full h-120 md:h-85 lg:h-120  px-6 md:px-10 lg:px-10 xl:px-40  relative flex flex-col-reverse md:flex-row gap-8 md:gap-4 xl:gap-16 ">
+      <div className="w-full h-1/2  md:h-full  lg:w-1/2 flex flex-col gap-4 lg:gap-6 xl:gap-10">
         {sliderData.map((slide, index) => {
           return (
             <motion.div
@@ -62,10 +62,10 @@ export default function Slider() {
                 )}
               </AnimatePresence>
               <motion.div layout className="flex flex-col gap-2  lg:gap-0">
-                <div className="text-xs leading-3 lg:leading-7 lg:text-lg text-green-600 font-medium tracking-tight">
+                <div className="text-xs leading-3 xl:leading-7 lg:leading-7 lg:text-[16px] xl:text-lg text-green-600 font-medium tracking-tight">
                   {slide.pretitle}
                 </div>
-                <div className="text-lg leading-5 lg:leading-11 lg:text-4xl text-green-50 font-normal lg:font-light tracking-tight">
+                <div className="text-lg leading-5 xl:leading-11 lg:text-[26px] lg:leading-9 xl:text-4xl text-green-50 font-normal lg:font-light tracking-tight">
                   {slide.title}
                 </div>
               </motion.div>

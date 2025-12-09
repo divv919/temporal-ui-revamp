@@ -20,9 +20,9 @@ export default function Home() {
       </div>
 
       <div className="w-[70%] h-[30%] blur-3xl  -translate-x-1/2 rounded-full opacity-2 bg-neutral-100 top-0 left-1/2 absolute -translate-y-1/2"></div>
-      <div className="relative w-full   h-250">
+      <div className="relative w-full   h-250 md:h-230 lg:h-250">
         <Gradient />
-        <div className="w-[80%] lg:w-[50%] py-20 flex flex-col gap-5 mx-auto relative z-100">
+        <div className="w-[80%] lg:w-[70%] xl:w-[50%] py-20 flex flex-col gap-5 mx-auto relative z-100">
           <div className="text-[43px] leading-11 lg:text-[80px] lg:leading-19 text-center tracking-tight font-medium text-neutral-200">
             {headerTitle}
           </div>
